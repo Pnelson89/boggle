@@ -127,7 +127,7 @@ class Board extends React.Component {
   }
 
   handleReturnPress(event) {
-    if (event.which === 13 && this.state.word != "") { // if the 'return' key is pressed
+    if (event.which === 13 && this.state.word !== "") { // if the 'return' key is pressed
       this.clearState();
       this.props.onReturnPress(this.state.word);
     }
@@ -169,7 +169,7 @@ class Board extends React.Component {
         </h3>
       </div>
     );
-  };
-};
+  }
+}
 
 export default Board
