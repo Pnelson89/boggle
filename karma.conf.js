@@ -82,7 +82,7 @@ module.exports = function(config) {
         'react/addons': 'react',
         'react/lib/ExecutionEnvironment': 'react',
         'react/lib/ReactContext': 'react',
-        'react-addons-test-utils': 'react-dom',
+        'react-addons-test-utils': 'react-dom'
       }
     }
   })
