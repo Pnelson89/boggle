@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import data from '../constants/data'
-import styles from '../stylesheets/index.css'
+// import styles from '../stylesheets/index.css'
 import Board from './Board'
 import WordList from '../components/WordList'
 
