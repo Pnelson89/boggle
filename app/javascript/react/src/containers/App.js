@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import data from '../constants/data'
-// import styles from '../stylesheets/index.css'
 import Board from './Board'
 import WordList from '../components/WordList'
 
@@ -12,11 +11,31 @@ class App extends Component {
 
     this.state = {
       board: this.initializeBoard(),
-      wordList: []
+      wordList: [],
+      wordListIndex: 0,
+      invalidWords: [],
+      timer: 15
     }
 
     this.initializeBoard = this.initializeBoard.bind(this);
     this.onReturnPress = this.onReturnPress.bind(this);
+  }
+
+  startTimer() {
+    let timerFunction = setInterval( () => {
+      this.setState({ timer: this.state.timer - 1 });
+    }, 1000)
+
+    let clock = setTimeout( () => {
+      clearInterval(timerFunction);
+      console.log("Hello from inside the stop timer conditional");
+    }, 1000 * this.state.timer)
+
+    return timerFunction
+  }
+
+  componentDidMount() {
+    this.startTimer();
   }
 
   onReturnPress(word) {
@@ -64,17 +83,45 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.wordList)
+    if (this.state.timer === 0) {
+      if (this.state.wordListIndex < this.state.wordList.length) {
+        fetch(`/api`, {
+          method: 'POST',
+          body: this.state.wordList[this.state.wordListIndex]
+        })
+        .then(response => {
+          debugger;
+          if (this.state.wordList[this.state.wordListIndex]) {
+            setTimeout ( () => {
+              this.state.wordList
+            }, 500)
+          }
+        })
+        this.setState({ wordListIndex: this.state.wordListIndex + 1 })
+      }
+    }
+
     return (
       <div>
-        <h1>Boggle</h1>
-        <div id="layout row">
-          <div className="small-8 medium-2 large-1 columns">
+        <div className="row">
+          <div className="title small-4 columns">
+            <h1>Boggle</h1>
+          </div>
+
+          <div className="timer small-8 columns">
+            <h3>{this.state.timer}</h3>
+          </div>
+        </div>
+
+        <div className="layout row">
+          <div className="small-8 columns">
             <Board
               board={this.state.board}
+              time={this.state.timer}
               onReturnPress={this.onReturnPress}
             />
           </div>
+
           <div className="small-4 columns">
             <h4>WordList</h4>
             <WordList
