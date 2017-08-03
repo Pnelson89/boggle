@@ -38,6 +38,27 @@ class App extends Component {
     this.startTimer();
   }
 
+  componentDidUpdate() {
+    if (this.state.timer === 0) {
+      if (this.state.wordListIndex < this.state.wordList.length) {
+        fetch(`/dictionary?key=${this.state.wordList[this.state.wordListIndex]}`)
+        .then(response => {
+          // debugger;
+          // if (this.state.wordList[this.state.wordListIndex]) {
+          //   setTimeout ( () => {
+          //     this.state.wordList
+          //   }, 500)
+          // }
+          return response.text();
+        })
+        .then(text => {
+          debugger;
+        })
+        this.setState({ wordListIndex: this.state.wordListIndex + 1 })
+      }
+    }
+  }
+
   onReturnPress(word) {
     this.setState({ wordList: this.state.wordList.concat(word) })
   }
@@ -83,24 +104,6 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.timer === 0) {
-      if (this.state.wordListIndex < this.state.wordList.length) {
-        fetch(`/api`, {
-          method: 'POST',
-          body: this.state.wordList[this.state.wordListIndex]
-        })
-        .then(response => {
-          debugger;
-          if (this.state.wordList[this.state.wordListIndex]) {
-            setTimeout ( () => {
-              this.state.wordList
-            }, 500)
-          }
-        })
-        this.setState({ wordListIndex: this.state.wordListIndex + 1 })
-      }
-    }
-
     return (
       <div>
         <div className="row">

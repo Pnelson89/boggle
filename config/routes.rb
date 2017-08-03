@@ -5,5 +5,7 @@ Rails.application.routes.draw do
 
   resources :games, only: [:show]
 
-  resources :api, only: [:index]
+  resources :dictionary, only: [:index]
+
+#yelp?key=someStuff
 end
