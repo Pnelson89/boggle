@@ -7,8 +7,6 @@ end
 
 gem 'webpacker'
 
-gem 'pry'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
 # Use postgresql as the database for Active Record
@@ -44,6 +42,8 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   gem 'rspec'
+
+  gem 'pry'
 end
 
 group :development do
