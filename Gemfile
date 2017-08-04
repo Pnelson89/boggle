@@ -42,6 +42,8 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   gem 'rspec'
+
+  gem 'pry'
 end
 
 group :development do

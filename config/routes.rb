@@ -4,4 +4,8 @@ Rails.application.routes.draw do
   # root to: "games#show", id: '1'
 
   resources :games, only: [:show]
+
+  resources :dictionary, only: [:index]
+
+#yelp?key=someStuff
 end

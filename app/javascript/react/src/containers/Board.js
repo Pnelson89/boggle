@@ -9,35 +9,13 @@ class Board extends React.Component {
       selectedIds: [],
       mouseOverData: {id: -1, isValid: false},
       currentId: null,
-      word: "",
-      timer: 15
+      word: ""
     }
 
     this.onSelectDie = this.onSelectDie.bind(this);
     this.selectionValidator = this.selectionValidator.bind(this);
     this.onDieMouseOver = this.onDieMouseOver.bind(this);
     this.handleReturnPress = this.handleReturnPress.bind(this);
-  }
-
-  startTimer() {
-    let timerFunction = setInterval( () => {
-      this.setState({ timer: this.state.timer - 1 });
-    }, 1000)
-
-    let clock = setTimeout( () => {
-      clearInterval(timerFunction);
-      console.log("Hello from inside the stop timer conditional");
-    }, 1000 * this.state.timer)
-
-    return timerFunction
-  }
-
-  // stopTimer(startTimer) {
-  //   clearInterval(startTimer);
-  // }
-
-  componentDidMount() {
-    this.startTimer();
   }
 
   gridIndexOf(grid, value) {
@@ -65,7 +43,7 @@ class Board extends React.Component {
 
   onSelectDie(id) {
     let selectedIds = this.state.selectedIds;
-    if (this.selectionValidator(id)) {
+    if (this.selectionValidator(id) && this.props.time !== 0) {
       let newSelectedIds = selectedIds.concat(id);
       this.setState({ selectedIds: newSelectedIds });
       this.setState({ currentId: id })
@@ -78,12 +56,15 @@ class Board extends React.Component {
 
       let dieIndex = this.gridIndexOf(boardIds, id)
       let targetLetter = this.props.board[dieIndex.x][dieIndex.y].letter
-      this.setState({ word: this.state.word +  targetLetter })
+
+      if (this.props.time !== 0) {
+        this.setState({ word: this.state.word +  targetLetter })
+      }
     }
   }
 
   onDieMouseOver(id) {
-    if (this.selectionValidator(id)) {
+    if (this.selectionValidator(id) && this.state.time !== 0) {
       let mouseOverObj = { id: id, isValid: true }
       this.setState({ mouseOverData: mouseOverObj })
     } else {
@@ -109,9 +90,11 @@ class Board extends React.Component {
     if (
       selectedIds.length < 1 ||
       ( ( !selectedIds.includes(newId) ) &&
-      ( ( xDiff === 1 && yDiff === 0 ) ||
-      ( xDiff === 0 && yDiff === 1 ) ||
-      ( xDiff === 1 && yDiff === 1) ) )
+        ( ( xDiff === 1 && yDiff === 0 ) ||
+          ( xDiff === 0 && yDiff === 1 ) ||
+          ( xDiff === 1 && yDiff === 1 )
+        )
+      )
     ) {
       return true;
     } else {
@@ -127,7 +110,7 @@ class Board extends React.Component {
   }
 
   handleReturnPress(event) {
-    if (event.which === 13 && this.state.word !== "") { // if the 'return' key is pressed
+    if (event.which === 13 && this.state.word !== "" && this.props.time !== 0) { // if the 'return' key is pressed
       this.clearState();
       this.props.onReturnPress(this.state.word);
     }
@@ -138,9 +121,50 @@ class Board extends React.Component {
   }
 
   render() {
-    // console.log(`id: ${this.state.mouseOverData.id}, isValid: ${this.state.mouseOverData.isValid}`)
-    let idIncrementer = 0;
     let flattenedBoard = [].concat.apply([], this.props.board);
+    let selectedIdsProp = this.state.selectedIds
+    let currentIdProp = this.state.currentId
+    let wordProp = this.state.word
+
+    if (this.props.time === 0) {  // when the game ends, do the following:
+      flattenedBoard.forEach( (die) => {
+        die.letter = " "
+      })
+
+      flattenedBoard[5].letter = "G";
+      flattenedBoard[6].letter = "A";
+      flattenedBoard[7].letter = "M";
+      flattenedBoard[8].letter = "E";
+
+      flattenedBoard[16].letter = "O";
+      flattenedBoard[17].letter = "V";
+      flattenedBoard[18].letter = "E";
+      flattenedBoard[19].letter = "R";
+
+      let gameOverSelectedIds = []
+
+      let flattenedBoardIds = flattenedBoard.forEach( (die) => {
+        if (die.letter !== " ") {
+          gameOverSelectedIds.push(die.id)
+        }
+      })
+
+
+      // for (let i = 1; i <= 25; i++) {
+      //   gameOverSelectedIds.push(i)
+      // }
+      // gameOverSelectedIds.push(...flattenedBoardIds)
+
+      selectedIdsProp = gameOverSelectedIds
+
+      currentIdProp = null
+      wordProp = "Removing invalid words / tallying points..."
+
+      if (this.props.spellCheckComplete) {
+        wordProp = "Nice Work! :D"
+      }
+    }
+
     let dice = flattenedBoard.map( (dieData, index) => {
       return(
         <Die
@@ -148,8 +172,8 @@ class Board extends React.Component {
           id={dieData.id}
           dieData={dieData}
           onSelectDie={this.onSelectDie}
-          selectedIds={this.state.selectedIds}
-          currentId={this.state.currentId}
+          selectedIds={selectedIdsProp}
+          currentId={currentIdProp}
           onDieMouseOver={this.onDieMouseOver}
           mouseOverData={this.state.mouseOverData}
         />
@@ -158,14 +182,11 @@ class Board extends React.Component {
 
     return(
       <div>
-        <div className="timer">
-          <h3>{this.state.timer}</h3>
-        </div>
         <div className="board" onKeyPress={this.handleReturnPress} tabIndex="0">
           {dice}
         </div>
         <h3 className="current-word">
-          {this.state.word}
+          {wordProp}
         </h3>
       </div>
     );

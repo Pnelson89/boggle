@@ -3,11 +3,13 @@
 
 body {
   font-family: monospace, sans-serif;
+  background-color: #BCC499;
 }
 
 h1 {
  margin-left: 5%;
  font-weight: bold;
+ font-size: 5vw;
 }
 
 img {
@@ -34,24 +36,27 @@ span {
 .board {
   display: flex;
   flex-wrap: wrap;
-  height: 200px;
-  width: 200px;
+  height: 37vw;
+  width: 37vw;
   margin: 0 10%;
 }
 
 .die {
   font-weight: bold;
   text-align: center;
+  line-height: 5vw;
   width: 17%;
   height: 17%;
   margin: 1.5%;
   background-color: beige;
   border: 3px solid black;
   border-radius: 5px;
+  font-size: 5vw;
 }
 
 .current {
-  border-style: double;
+  /*border-style: double;*/
+  box-shadow: 3px 3px 0.5px #888888;
 }
 
 .selected {
@@ -69,13 +74,48 @@ span {
   border-color: red;
 }*/
 
-
 .current-word {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 4.2vw;
   text-align: center;
 }
 
 :focus {
   outline: none;
 }
+
+.invalid-word {
+  text-decoration: line-through;
+  color: red;
+}
+
+.total-points {
+  list-style-type: none;
+  color: green;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 3vw;
+}
+
+h4.word-list {
+  font-size: 3.5vw;
+  font-weight: bold;
+  text-align: left;
+}
+
+ul.word-list {
+  font-size: 2.1vw;
+}
+
+li {
+  margin: 0 0;
+}
+
+.timer {
+  font-weight: bold;
+  font-size: 5vw;
+}
+
+/*overflow-y: auto
+height: 5em
+(THIS IS FOR IMPLMENTING THE WORDLIST AS A SCROLLABLE)*/

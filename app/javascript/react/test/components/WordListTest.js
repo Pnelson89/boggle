@@ -7,7 +7,10 @@ describe('A test for WordList', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<WordList wordArray={['this', 'is', 'a', 'test']}/>)
+    wrapper = mount(<WordList
+                      wordArray={['this', 'is', 'a', 'test']}
+                      invalidWordIds={[2, 4]}
+                    />)
   })
 
   it('should render an unordered list', () => {
