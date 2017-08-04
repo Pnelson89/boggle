@@ -158,7 +158,11 @@ class Board extends React.Component {
       selectedIdsProp = gameOverSelectedIds
 
       currentIdProp = null
-      wordProp = ""
+      wordProp = "Removing invalid words / tallying points..."
+
+      if (this.props.spellCheckComplete) {
+        wordProp = "Nice Work! :D"
+      }
     }
 
     let dice = flattenedBoard.map( (dieData, index) => {

@@ -9,14 +9,12 @@ class DictionaryController < ApplicationController
 
     xmlRex = /<scrabble>[1-9]/
 
-    binding.pry
+    isValid = response.match(xmlRex)
 
-    isValid? = !!reponse.match(xmlRex)
-
-    if isValid?
-      render text: "true"
+    if isValid
+      render json: {'isValid': true, 'word': testWord}
     else
-      render text: "false"
+      render json: {'isValid': false, 'word': testWord}
     end
   end
 end
