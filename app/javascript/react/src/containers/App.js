@@ -42,7 +42,6 @@ class App extends Component {
 
   componentDidUpdate() {
     if (this.state.timer === 0) {
-      debugger;
       if (this.state.wordListIndex < this.state.wordList.length) {
         console.log(`current word: ${this.state.wordList[this.state.wordListIndex]}`)
         fetch(`/dictionary?key=${this.state.wordList[this.state.wordListIndex]}`)
