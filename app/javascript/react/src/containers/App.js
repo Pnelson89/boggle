@@ -178,7 +178,7 @@ class App extends Component {
       <div>
         <div className="row">
           <div className="title small-4 columns">
-            <h1>Boggle</h1>
+            <h1>Blorgle</h1>
           </div>
 
           <div className="small-8 columns">

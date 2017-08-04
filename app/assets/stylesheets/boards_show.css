@@ -3,11 +3,13 @@
 
 body {
   font-family: monospace, sans-serif;
+  background-color: #BCC499;
 }
 
 h1 {
  margin-left: 5%;
  font-weight: bold;
+ font-size: 5vw;
 }
 
 img {
@@ -42,7 +44,7 @@ span {
 .die {
   font-weight: bold;
   text-align: center;
-  line-height: 4.5vw;
+  line-height: 5vw;
   width: 17%;
   height: 17%;
   margin: 1.5%;
