@@ -38,7 +38,7 @@ span {
   flex-wrap: wrap;
   height: 37vw;
   width: 37vw;
-  margin: 0% 10%;
+  margin: 0 10%;
 }
 
 .die {
@@ -74,10 +74,6 @@ span {
   border-color: red;
 }*/
 
-.current {
-  border-color:
-}
-
 .current-word {
   font-weight: bold;
   font-size: 4.2vw;
@@ -112,7 +108,7 @@ ul.word-list {
 }
 
 li {
-  margin: 0% 0%;
+  margin: 0 0%;
 }
 
 .timer {
