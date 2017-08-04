@@ -8,9 +8,9 @@ class DictionaryController < ApplicationController
               #{test_word}?key=#{api_key}`)
     response = Net::HTTP.get(uri)
 
-    xmlRex = /<scrabble>[1-9]/
+    xml_rex = /<scrabble>[1-9]/
 
-    is_valid = response.match(xmlRex)
+    is_valid = response.match(xml_rex)
 
     if is_valid
       render json: { 'is_valid': true, 'word': test_word }
