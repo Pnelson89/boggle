@@ -3,8 +3,6 @@ import data from '../constants/data'
 import Board from './Board'
 import WordList from '../components/WordList'
 
-//datamuse (no token required)
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +10,6 @@ class App extends Component {
     this.state = {
       board: this.initializeBoard(),
       wordList: [],
-      wordListIndex: 0,
       invalidWordIds: [],
       timer: 11,
       points: 0,
@@ -38,69 +35,62 @@ class App extends Component {
   }
 
   endGameTimer() {
-    let wordListIndex = this.state.wordList.length
+    let wordListIndex = -1
 
     let delay = setInterval( () => {
-      wordListIndex--;
+      wordListIndex++;
       console.log(`wordListIndex: ${wordListIndex}`)
-      wordValidator(wordListIndex);
+      this.wordValidator(wordListIndex);
     }, 1000)
 
     let clock = setTimeout( () => {
       clearInterval(delay);
       console.log("Hello from after finishing our checks")
-    }, 1000 * wordListIndex)
+    }, 1000 * (this.state.wordList.length + 1))
 
-    // if (this.state.wordListIndex < this.state.wordList.length) {
-    //   console.log(`current word: ${this.state.wordList[this.state.wordListIndex]}`)
-    //   fetch(`/dictionary?key=${this.state.wordList[this.state.wordListIndex]}`)
-    //   .then(response => {
-    //     return response.json();
-    //   })
-    //   .then(body => {
-    //     setTimeout ( () => {
-    //       let oldInvalidWordIds = this.state.invalidWordIds
-    //       let newInvalidWordIds = oldInvalidWordIds
-    //
-    //       if (!body.isValid) {
-    //         let wordIndex = this.state.wordListIndex
-    //         newInvalidWordIds = newInvalidWordIds.concat(wordIndex)
-    //
-    //         this.setState({
-    //           invalidWordIds: newInvalidWordIds,
-    //           wordListIndex: this.state.wordListIndex + 1
-    //         })
-    //       } else {
-    //
-    //         let currentWord = this.state.wordList[this.state.wordListIndex]
-    //         let pointsThisWord = (this.pointDictionary(currentWord.length))
-    //
-    //         let newWordList = this.state.wordList.filter( word => word !== currentWord )
-    //         newWordList.splice(this.state.wordListIndex, 0, `${currentWord}:\t${pointsThisWord}pt(s)`)
-    //         this.setState({
-    //           points: this.state.points + pointsThisWord,
-    //           wordList: newWordList,
-    //           wordListIndex: this.state.wordListIndex + 1
-    //         })
-    //       }
-    //     }, 1000)
-    //     return body
-    //   })
-    // } else if (this.state.wordListIndex === this.state.wordList.length) {
-    //   this.setState({
-    //     wordList: this.state.wordList.concat(`TOTAL: ${this.state.points}pt(s)`),
-    //     wordListIndex: this.state.wordListIndex + 2,
-    //     spellCheckComplete: true
-    //   })
-    // }
+    return delay
+  }
+
+  wordValidator(wordListIndex) {
+    if (wordListIndex < this.state.wordList.length) {
+      fetch(`/dictionary?key=${this.state.wordList[wordListIndex]}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        let oldInvalidWordIds = this.state.invalidWordIds
+        let newInvalidWordIds = oldInvalidWordIds
+
+        console.log(`wordList Index: ${wordListIndex}\nwordList Length: ${this.state.wordList.length}`)
+        if (!body.is_valid) {
+          newInvalidWordIds = newInvalidWordIds.concat(wordListIndex)
+          this.setState({ invalidWordIds: newInvalidWordIds })
+        } else {
+          let currentWord = this.state.wordList[wordListIndex]
+          let pointsThisWord = (this.pointDictionary(currentWord.length))
+
+          let newWordList = this.state.wordList.filter( word => word !== currentWord )
+          newWordList.splice(wordListIndex, 0, `${currentWord}:\t${pointsThisWord}pt(s)`)
+
+          this.setState({
+            points: this.state.points + pointsThisWord,
+            wordList: newWordList
+          })
+
+          if (wordListIndex === this.state.wordList.length - 1) {
+            this.setState({
+              wordList: this.state.wordList.concat(`TOTAL: ${this.state.points}pt(s)`),
+              spellCheckComplete: true
+            })
+          }
+        }
+      })
+    }
   }
 
   componentDidMount() {
     this.startTimer();
   }
-
-  // componentDidUpdate() {
-  // }
 
   pointDictionary(wordLength) {
     if (wordLength <= 2) {return 0}
