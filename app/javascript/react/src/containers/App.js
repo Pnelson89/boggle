@@ -11,7 +11,7 @@ class App extends Component {
       board: this.initializeBoard(),
       wordList: [],
       invalidWordIds: [],
-      timer: 11,
+      timer: 60,
       points: 0,
       spellCheckComplete: false
     }
@@ -29,7 +29,7 @@ class App extends Component {
       clearInterval(timerFunction);
       this.endGameTimer();
       console.log("Hello from inside the stop timer conditional");
-    }, 1000 * this.state.timer)
+    }, 1000 * this.state.timer + 500)
 
     return timerFunction
   }
@@ -45,8 +45,12 @@ class App extends Component {
 
     let clock = setTimeout( () => {
       clearInterval(delay);
+      this.setState({
+        wordList: this.state.wordList.concat(`TOTAL: ${this.state.points}pt(s)`),
+        spellCheckComplete: true
+      })
       console.log("Hello from after finishing our checks")
-    }, 1000 * (this.state.wordList.length + 1))
+    }, 1000 * (this.state.wordList.length + 1) + 500)
 
     return delay
   }
@@ -76,13 +80,6 @@ class App extends Component {
             points: this.state.points + pointsThisWord,
             wordList: newWordList
           })
-
-          if (wordListIndex === this.state.wordList.length - 1) {
-            this.setState({
-              wordList: this.state.wordList.concat(`TOTAL: ${this.state.points}pt(s)`),
-              spellCheckComplete: true
-            })
-          }
         }
       })
     }
@@ -154,11 +151,9 @@ class App extends Component {
     return (
       <div>
         <div className="row">
-          <div className="title small-4 columns">
-            <h1>Blorgle</h1>
-          </div>
+          <div className="small-2 columns"/>
 
-          <div className="small-8 columns">
+          <div className="small-10 columns">
             <h3 className="timer">{`${Math.floor(this.state.timer / 60)}:${Math.floor((this.state.timer % 60)/10)}${((this.state.timer % 60)%10)}`}</h3>
           </div>
         </div>
@@ -173,7 +168,7 @@ class App extends Component {
             />
           </div>
 
-          <div className="small-5 columns">
+          <div className="word-list-div small-4 columns end">
             <h4 className="word-list">WordList</h4>
             <WordList
               wordArray={this.state.wordList}
