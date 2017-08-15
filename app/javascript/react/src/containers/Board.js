@@ -158,7 +158,7 @@ class Board extends React.Component {
       selectedIdsProp = gameOverSelectedIds
 
       currentIdProp = null
-      wordProp = "Removing invalid words / tallying points..."
+      wordProp = "Checking Words..."
 
       if (this.props.spellCheckComplete) {
         wordProp = "Nice Work! :D"

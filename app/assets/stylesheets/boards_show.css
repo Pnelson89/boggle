@@ -1,9 +1,25 @@
 /*flexbox froggy*/
 
+html {
+}
 
 body {
   font-family: monospace, sans-serif;
-  background-color: #BCC499;
+  /*background-color: #BCC499;*/
+  background: url(wood.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+nav {
+  background: rgba(80, 61, 46, 0.3);
+  font-size: 3vw;
+}
+
+.logo {
+  font-weight: bold;
 }
 
 h1 {
@@ -16,6 +32,11 @@ img {
   height: 20rem;
   width: 70%;
   margin-top: 2rem;
+}
+
+.button {
+  color: black;
+  background-color: #BD5532;
 }
 
 .box-div {
@@ -36,27 +57,27 @@ span {
 .board {
   display: flex;
   flex-wrap: wrap;
-  height: 37vw;
-  width: 37vw;
+  height: 33vw;
+  width: 33vw;
   margin: 0 10%;
 }
 
 .die {
   font-weight: bold;
   text-align: center;
-  line-height: 5vw;
+  line-height: 4.1vw;
   width: 17%;
   height: 17%;
   margin: 1.5%;
   background-color: beige;
-  border: 3px solid black;
+  border: 0.7vw solid black;
   border-radius: 5px;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 
 .current {
-  /*border-style: double;*/
-  box-shadow: 3px 3px 0.5px #888888;
+  border-style: double;
+  /*box-shadow: 3px 3px 0.5px #888888;*/
 }
 
 .selected {
@@ -78,6 +99,7 @@ span {
   font-weight: bold;
   font-size: 4.2vw;
   text-align: center;
+  margin-top: 0;
 }
 
 :focus {
@@ -91,10 +113,15 @@ span {
 
 .total-points {
   list-style-type: none;
-  color: green;
+  /*color: green;*/
   font-weight: bold;
   text-decoration: underline;
   font-size: 3vw;
+}
+
+.word-list-div {
+  background-color: rgba(245,245,220, 0.3);
+  border-radius: 5px;
 }
 
 h4.word-list {
@@ -113,7 +140,9 @@ li {
 
 .timer {
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 4vw;
+  margin-top: 0.1vw;
+  margin-bottom: 0.1vw;
 }
 
 /*overflow-y: auto
