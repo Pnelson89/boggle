@@ -12,6 +12,22 @@
   </head>
 
   <body>
+
+    <nav>
+      <div class="nav row">
+        <div class="logo small-3 columns">Boggle</div>
+        <% if user_signed_in? %>
+          <div class="nav-link small-9 columns"><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></div>
+        <% else %>
+          <div class="nav-link small-3 columns"><%= link_to 'Sign In', new_user_session_path %></div>
+          <div class="nav-link small-6 columns"><%= link_to 'Sign Up', new_user_registration_path %></div>
+        <% end %>
+      </div>
+    </nav>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>
