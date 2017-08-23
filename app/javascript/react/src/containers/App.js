@@ -52,7 +52,7 @@ class App extends Component {
       console.log("Hello from after finishing our checks")
     }, 1000 * (this.state.wordList.length + 1) + 500)
 
-    return delay
+    return delay;
   }
 
   wordValidator(wordListIndex) {
