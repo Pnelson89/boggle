@@ -17,8 +17,11 @@ describe('A test for Die', () => {
                     />)
   })
 
-  it('should render a single div with the correct letter', () => {
+  it('should render a single div', () => {
     expect(wrapper.find('div').length).toEqual(1);
+  })
+
+  it('should render a single div with the correct letter', () => {
     expect(wrapper.find('div').at(0).text()).toEqual('t');
   })
 
