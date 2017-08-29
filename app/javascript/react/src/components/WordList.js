@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 const WordList = (props) => {
   let words = props.wordArray.map( (word, index) => {
     let classText = ""

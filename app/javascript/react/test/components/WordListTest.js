@@ -13,8 +13,16 @@ describe('A test for WordList', () => {
                     />)
   })
 
-  it('should render an unordered list', () => {
+  it('should render a single unordered list with 4 elements', () => {
     // expect(wrapper.find('ul').text()).toEqual("Hello World")
     expect(wrapper.find('ul').length).toEqual(1);
+    expect(wrapper.find('li').length).toEqual(4);
+  })
+
+  it('should have an unordered list with the correct element values', () => {
+    expect(wrapper.find('li').at(0).text()).toEqual('this');
+    expect(wrapper.find('li').at(1).text()).toEqual('is');
+    expect(wrapper.find('li').at(2).text()).toEqual('a');
+    expect(wrapper.find('li').at(3).text()).toEqual('test');
   })
 })
